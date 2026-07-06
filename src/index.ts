@@ -20,11 +20,11 @@ console.log("DEBUG: Current MONGO_URI value is ->", process.env.MONGO_URI);
 mongoose
 .connect(process.env.MONGO_URI!)
 .then(()=>{
-    console.log("📦 Successfully connected to MongoDB database ledger!");
+    console.log(" Successfully connected to MongoDB database ledger!");
     app.listen(PORT, () =>{
-        console.log(`🚀 Server listening on endpoint: http://localhost:${PORT}`,);
+        console.log(` Server listening on endpoint: http://localhost:${PORT}`,);
     });
 })
 .catch((err)=>{
-    console.error("❌ Database connection dropped due to: ", err);
+    console.error(" Database connection dropped due to: ", err);
 });

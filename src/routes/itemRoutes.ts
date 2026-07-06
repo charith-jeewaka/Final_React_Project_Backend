@@ -11,7 +11,7 @@ const manageItemsController = (req: any, res: any) =>
 const viewFeedbackController = (req: any, res: any) =>
   res.json({ message: "Loading retail system feedback logs." });
 
-// 🔒 ROUTE A: Only ADMIN and MANAGER can create/update inventory items
+//  ROUTE A: Only ADMIN and MANAGER can create/update inventory items
 router.post(
   "/manage-items",
   protect,
@@ -19,7 +19,7 @@ router.post(
   manageItemsController,
 );
 
-// 🔒 ROUTE B: Only an ADMIN can access system feedback loops
+//  ROUTE B: Only an ADMIN can access system feedback loops
 router.get(
   "/feedback",
   protect,
