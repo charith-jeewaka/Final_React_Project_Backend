@@ -1,6 +1,7 @@
 import { UserModel,UserRole } from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { generateAccessToken ,generateRefreshToken } from "../util/generateToken.js";
 
 export class AuthService {
   // Register User
@@ -53,25 +54,13 @@ export class AuthService {
       );
     }
 
-    const accessToken = jwt.sign(
-      {
-        id: user._id,
-        roles: user.roles,
-      },
-      process.env.JWT_SECRET!,
-      {
-        expiresIn: "15m",
-      },
+    const accessToken = generateAccessToken(
+        user._id.toString(),
+        user.roles
     );
 
-    const refreshToken = jwt.sign(
-      {
-        id: user._id,
-      },
-      process.env.JWT_REFRESH_SECRET!,
-      {
-        expiresIn: "7d",
-      },
+    const refreshToken = generateRefreshToken(
+        user._id.toString()
     );
 
     return {
