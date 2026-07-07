@@ -14,7 +14,7 @@ router.post(
   createItem,
 );
 
-router.get("/", protect, restrictTo(UserRole.ADMIN), getAllItems);
+router.get("/", protect, restrictTo(UserRole.ADMIN,UserRole.USER), getAllItems);
 
 router.get("/:id", protect, restrictTo(UserRole.ADMIN), getItemById);
 
