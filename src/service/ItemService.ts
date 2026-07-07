@@ -10,6 +10,7 @@ interface CreateItemData {
   active?: boolean;
 }
 
+//create item
 export const createItem = async (
   itemData: CreateItemData,
   file: Express.Multer.File,
@@ -30,3 +31,10 @@ export const createItem = async (
 
   return item;
 };
+
+// GET ALL ITEMS
+export const getAllItems = async () => {
+  return await ItemModel.find().sort({ createdAt: -1 });
+};
+
+
