@@ -22,3 +22,35 @@ export const placeOrder = async (
     });
   }
 };
+
+export const getMyOrders = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const orders = await OrderService.getMyOrders(req.user!.id);
+
+    res.status(200).json({
+      message: "Orders fetched successfully.",
+      orders,
+    });
+  } catch (error: any) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+export const getOrderById = async (
+  req: Request<{ id: string }>,
+  res: Response,
+) => {
+  try {
+    const order = await OrderService.getOrderById(req.params.id);
+
+    res.status(200).json({
+      order,
+    });
+  } catch (error: any) {
+    res.status(404).json({
+      message: error.message,
+    });
+  }
+};

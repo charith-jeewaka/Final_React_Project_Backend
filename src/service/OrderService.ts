@@ -78,3 +78,19 @@ export const createOrder = async (orderData: CreateOrderData) => {
 
   return order;
 };
+
+export const getMyOrders = async (userId: string) => {
+  return await OrderModel.find({ user: userId }).sort({
+    createdAt: -1,
+  });
+};
+
+export const getOrderById = async (id: string) => {
+  const order = await OrderModel.findById(id);
+
+  if (!order) {
+    throw new Error("Order not found.");
+  }
+
+  return order;
+};
