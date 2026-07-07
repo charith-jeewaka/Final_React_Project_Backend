@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import autRoutes from "../src/routes/authRoutes.js"
 import itemRoutes from "./routes/itemRoutes.js"
+import orderRoutes from "./routes/orderRoutes.js";
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/api/v1/auth", autRoutes)
 app.use("/api/v1/items", itemRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 console.log("DEBUG: Current MONGO_URI value is ->", process.env.MONGO_URI);
 mongoose

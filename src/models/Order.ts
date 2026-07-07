@@ -8,13 +8,26 @@ const OrderItemSchema = new Schema(
       required: true,
     },
 
-    name: String,
+    name: {
+      type: String,
+      required: true,
+    },
 
-    price: Number,
+    image: {
+      type: String,
+      required: true,
+    },
 
-    quantity: Number,
+    price: {
+      type: Number,
+      required: true,
+    },
 
-    image: String,
+    quantity: {
+      type: Number,
+      required: true,
+      min: 1,
+    },
   },
   { _id: false },
 );
@@ -35,25 +48,41 @@ const OrderSchema = new Schema(
     customerName: {
       type: String,
       required: true,
+      trim: true,
     },
 
     phone: {
       type: String,
       required: true,
+      trim: true,
     },
 
-    email: String,
+    email: {
+      type: String,
+      default: "",
+      trim: true,
+    },
 
     address: {
       type: String,
       required: true,
+      trim: true,
     },
 
-    subtotal: Number,
+    subtotal: {
+      type: Number,
+      required: true,
+    },
 
-    deliveryFee: Number,
+    deliveryFee: {
+      type: Number,
+      default: 500,
+    },
 
-    total: Number,
+    total: {
+      type: Number,
+      required: true,
+    },
 
     status: {
       type: String,
@@ -66,4 +95,4 @@ const OrderSchema = new Schema(
   },
 );
 
-export default mongoose.model("Order", OrderSchema);
+export const OrderModel = mongoose.model("Order", OrderSchema);
