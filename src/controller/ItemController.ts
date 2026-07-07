@@ -25,12 +25,11 @@ export const getAllItems = async (
   req: Request,
   res: Response,
 ): Promise<any> => {
-    console.log("1. Controller started");
+  console.log("1. Controller started");
   try {
     const items = await ItemService.getAllItems();
 
-        console.log("2. Service returned:", items.length);
-
+    console.log("2. Service returned:", items.length);
 
     return res.status(200).json({
       message: "Items fetched successfully.",
@@ -38,7 +37,7 @@ export const getAllItems = async (
       items,
     });
   } catch (error) {
-        console.log("3. Error:", error);
+    console.log("3. Error:", error);
 
     return res.status(500).json({
       message: "Failed to fetch items.",
@@ -62,5 +61,54 @@ export const getItemById = async (
     return res.status(404).json({
       message: error.message,
     });
+  }
+};
+
+// Update item
+
+export const updateItem = async (
+  req: Request<{ id: string }>,
+  res: Response,
+): Promise<any> => {
+  try {
+    const item = await ItemService.updateItem(
+      req.params.id,
+      req.body,
+      req.file as Express.Multer.File | undefined,
+    );
+
+    return res.status(200).json({
+      message: "Item updated successfully.",
+      item,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+// DELETE ITEM
+export const deleteItem = async (
+  req: Request<{ id: string }>,
+  res: Response,
+): Promise<any> => {
+
+  try {
+
+    const item = await ItemService.deleteItem(req.params.id);
+
+    return res.status(200).json({
+      message: "Item deleted successfully.",
+      item,
+    });
+
+
+  } catch (error: any) {
+
+    return res.status(404).json({
+      message: error.message,
+    });
+
   }
 };

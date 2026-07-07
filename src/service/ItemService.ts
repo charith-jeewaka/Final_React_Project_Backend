@@ -1,5 +1,5 @@
 import { ItemModel } from "../models/Item.js";
-import { uploadImage } from "./CloudinaryService.js";
+import { uploadImage , deleteImage } from "./CloudinaryService.js";
 
 interface CreateItemData {
   name: string;
@@ -48,4 +48,66 @@ export const getItemById = async (id: string) => {
   return item;
 };
 
+
+
+
+interface UpdateItemData {
+  name?: string;
+  category?: string;
+  description?: string;
+  price?: number;
+  stock?: number;
+  active?: boolean;
+}
+
+export const updateItem = async (
+  id: string,
+  itemData: UpdateItemData,
+  file?: Express.Multer.File,
+) => {
+  const item = await ItemModel.findById(id);
+
+  if (!item) {
+    throw new Error("Item not found.");
+  }
+
+  // If a new image was uploaded
+  if (file) {
+    await deleteImage(item.imagePublicId);
+
+    const uploadedImage = await uploadImage(file.buffer, "items");
+
+    item.image = uploadedImage.secure_url;
+    item.imagePublicId = uploadedImage.public_id;
+  }
+
+  // Update fields
+  Object.assign(item, itemData);
+
+  await item.save();
+
+  return item;
+};
+
+
+// DELETE ITEM
+export const deleteItem = async (id: string) => {
+
+  const item = await ItemModel.findById(id);
+
+  if (!item) {
+    throw new Error("Item not found.");
+  }
+
+
+  // Delete image from Cloudinary
+  await deleteImage(item.imagePublicId);
+
+
+  // Delete item from MongoDB
+  await ItemModel.findByIdAndDelete(id);
+
+
+  return item;
+};
 
