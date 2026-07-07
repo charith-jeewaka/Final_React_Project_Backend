@@ -37,4 +37,15 @@ export const getAllItems = async () => {
   return await ItemModel.find().sort({ createdAt: -1 });
 };
 
+// GET ITEM BY ID
+export const getItemById = async (id: string) => {
+  const item = await ItemModel.findById(id);
+
+  if (!item) {
+    throw new Error("Item not found.");
+  }
+
+  return item;
+};
+
 

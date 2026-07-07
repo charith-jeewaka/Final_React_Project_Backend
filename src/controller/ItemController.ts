@@ -45,3 +45,22 @@ export const getAllItems = async (
     });
   }
 };
+
+// GET ITEM BY ID
+export const getItemById = async (
+  req: Request<{ id: string }>,
+  res: Response,
+): Promise<any> => {
+  try {
+    const item = await ItemService.getItemById(req.params.id);
+
+    return res.status(200).json({
+      message: "Item fetched successfully.",
+      item,
+    });
+  } catch (error: any) {
+    return res.status(404).json({
+      message: error.message,
+    });
+  }
+};
