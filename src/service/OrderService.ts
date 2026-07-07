@@ -1,5 +1,6 @@
 import { OrderModel } from "../models/Order.js";
 import { ItemModel } from "../models/Item.js";
+import { sendOrderEmail } from "./EmailService.js";
 
 interface OrderItem {
   item: string;
@@ -68,6 +69,12 @@ export const createOrder = async (orderData: CreateOrderData) => {
     deliveryFee,
     total,
   });
+
+  try {
+    await sendOrderEmail(order);
+  } catch (error) {
+    console.error("Failed to send order email:", error);
+  }
 
   return order;
 };
