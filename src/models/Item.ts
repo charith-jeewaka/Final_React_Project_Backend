@@ -7,6 +7,7 @@ export interface IItem extends Document {
   price: number;
   stock: number;
   image: string;
+  imagePublicId: string;
   active: boolean;
 
   averageRating: number;
