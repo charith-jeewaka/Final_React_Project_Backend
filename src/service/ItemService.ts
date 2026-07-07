@@ -1,3 +1,4 @@
+//src/service/ItemService.ts
 import { ItemModel } from "../models/Item.js";
 import { uploadImage , deleteImage } from "./CloudinaryService.js";
 
