@@ -94,3 +94,25 @@ export const getOrderById = async (id: string) => {
 
   return order;
 };
+
+export const getAllOrders = async () => {
+  const orders = await OrderModel.find().sort({
+    createdAt: -1,
+  });
+
+  return orders;
+};
+
+export const updateOrderStatus = async (id: string, status: string) => {
+  const order = await OrderModel.findById(id);
+
+  if (!order) {
+    throw new Error("Order not found.");
+  }
+
+  order.status = status;
+
+  await order.save();
+
+  return order;
+};

@@ -54,3 +54,43 @@ export const getOrderById = async (
     });
   }
 };
+
+export const getAllOrders = async (
+  req: Request,
+  res: Response,
+): Promise<any> => {
+  try {
+    const orders = await OrderService.getAllOrders();
+
+    return res.status(200).json({
+      message: "Orders fetched successfully.",
+      count: orders.length,
+      orders,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+export const updateOrderStatus = async (
+  req: Request<{ id: string }>,
+  res: Response,
+): Promise<any> => {
+  try {
+    const order = await OrderService.updateOrderStatus(
+      req.params.id,
+      req.body.status,
+    );
+
+    return res.status(200).json({
+      message: "Order status updated successfully.",
+      order,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+};
